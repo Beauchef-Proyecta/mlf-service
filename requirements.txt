@@ -1,0 +1,15 @@
+aioice==0.9.0
+aiortc==1.5.0
+av==10.0.0
+cffi==1.15.1
+cryptography==40.0.2
+dnspython==2.3.0
+google-crc32c==1.5.0
+ifaddr==0.2.0
+numpy==1.24.2
+opencv-python==4.7.0.72
+pycparser==2.21
+pyee==9.0.4
+pylibsrtp==0.8.0
+pyOpenSSL==23.1.1
+typing_extensions==4.5.0
