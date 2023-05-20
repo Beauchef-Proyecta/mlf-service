@@ -1,0 +1,5 @@
+services:
+  video:
+    image: mlf-video
+    ports:
+      - 8080:8080
