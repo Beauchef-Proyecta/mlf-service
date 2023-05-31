@@ -5,7 +5,6 @@ from serial_wrapper.mk2_serial import MK2Serial
 
 app = Flask(__name__)
 mk2_serial = MK2Serial()
-video_feed_builder = VideoFeed()
 
 @app.route("/")
 def home():
