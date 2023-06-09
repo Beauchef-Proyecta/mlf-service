@@ -26,13 +26,15 @@ def set_joints():
     q0 = request.args.get("q0")
     q1 = request.args.get("q1")
     q2 = request.args.get("q2")
+    q3 = request.args.get("q3")
 
     s0 = (90 - int(q0) * 2) & 0xFF
     s1 = (90 + int(q1)) & 0xFF
     s2 = (180 - int(q2) - int(q1)) & 0xFF
+    s3 = int(q3) & 0xFF
 
-    mk2_serial.set_joints([s0, s1, s2])
-    return f"Mi nueva pose es: (q0={q0}, q1={q1}, q2={q2})"
+    mk2_serial.set_joints([s0, s1, s2, s3])
+    return f"Mi nueva pose es: (q0={q0}, q1={q1}, q2={q2}, q3={q3})"
 
 @app.route("/set_magnet_servo", methods=["GET"])
 def set_magnet_servo():
@@ -47,6 +49,13 @@ def set_magnet_status():
     s = int(state) & 0xFF 
     mk2_serial.set_magnet_status([s])
     return f"Estado del iman: {state}"
+
+@app.route("/set_gripper_servo", methods=["GET"])
+def set_gripper_servo():
+    q = request.args.get("q")
+    s = int(q) & 0xFF
+    mk2_serial.set_gripper_servo([s])
+    return f"Estado del gripper: {q}"
 
 
 if __name__ == "__main__":

@@ -32,3 +32,7 @@ class MK2Serial:
     def set_magnet_status(self, state: list):
         data = self.build_serial_msg(self.CMD_MAGNET, state)
         return self.serial.send_data(data)
+    
+    def set_gripper_servo(self, angle: list):
+        data = self.build_serial_msg(self.CMD_GRIPPER, angle)
+        return self.serial.send_data(data)
