@@ -17,13 +17,15 @@ https://www.arduino.cc/en/Reference/APIStyleGuide
 /** Components */
 
 Joint joints[4];
-Magnet magnet(GRIPPER_RELAY, HOME_RELAY_STATUS);
+
 
 void setup_components() {
     joints[0] = Joint(SERVO_J0, HOME_J0);
     joints[1] = Joint(SERVO_J1, HOME_J1);
     joints[2] = Joint(SERVO_J2, HOME_J2);
     joints[3] = Joint(SERVO_J3, HOME_J3);
+    Joint gripper(GRIPPER_SERVO, HOME_GRIPPER);
+    Magnet magnet(GRIPPER_RELAY, HOME_RELAY);
 };
 
 /** Wrapper functions */
@@ -33,6 +35,12 @@ int set_joint_position(char params[]) {
     for (int id = 0; id < 4; id++) {
         res += joints[id].set_position((uint8_t)params[id + 1]);
     }
+    return (int)res;
+};
+
+int set_gripper_position(char params[]) {
+    byte res = 0;
+    res = gripper.set_position((uint8_t)params[1]);
     return (int)res;
 };
 
@@ -47,8 +55,9 @@ int set_magnet_status(char params[]) {
 func_ptr_t command_list[256] = {};
 
 void build_command_list() { 
-    command_list[CMD_JOINT] = set_joint_position;
-    command_list[CMD_MAGNET] = set_magnet_status;
+    command_list[CMD_JOINT]   = set_joint_position;
+    command_list[CMD_MAGNET]  = set_magnet_status;
+    command_list[CMD_GRIPPER] = set_gripper_position;
     
  };
 
