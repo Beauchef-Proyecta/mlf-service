@@ -39,9 +39,9 @@ def set_joints():
 @app.route("/set_relay_status", methods=["GET"])
 def set_relay_status():
     state = request.args.get("state")
-    n_relay = request.args.get("n_relay")
+    relay = request.args.get("n_relay")
     s = int(state) & 0xFF 
-    n = int(n_relay)
+    n = int(relay)
     mk2_serial.set_relay_status([s], n)
     return f"Estado del relay {n}: {state}"
 
