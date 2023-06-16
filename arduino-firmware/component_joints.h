@@ -13,14 +13,14 @@ class Joint {
     uint8_t set_position(uint8_t position);
 };
 
-class Magnet {
+class Relay {
   private:
     int status;
     int pin;
 
   public:
-    Magnet();
-    Magnet(int pin, int status);
+    Relay();
+    Relay(int pin, int status);
     
     void begin();
     uint8_t set_status(uint8_t status);

@@ -14,19 +14,24 @@ https://www.arduino.cc/en/Reference/APIStyleGuide
 #define SERVO_J1        5
 #define SERVO_J2        6
 #define SERVO_J3        9   // gripper rotor, new dof
-#define GRIPPER_SERVO   10  // manage grappling 
+
+#define GRIPPER_SERVO   10  // manage grappling
 #define EXTRA_SERVO     11  // extra servo
-#define GRIPPER_RELAY   7   // manage relay
-#define BELT_STATUS     8     // manage belt status
-#define BELT_DIRECTION  4  // manage belt forward-backward
+#define RELAY_1         7   // manage first relay
+#define RELAY_2         8   // manage second relay
+
+#define BELT_STATUS     8   // manage belt status
+#define BELT_DIRECTION  4   // manage belt forward-backward
 
 /** HOME VALUES */
 #define HOME_J0         90
 #define HOME_J1         90
 #define HOME_J2         90
 #define HOME_J3         90
-#define HOME_RELAY      1
-#define HOME_GRIPPER    180
+#define HOME_RELAY_1    1
+#define HOME_RELAY_2    1
+#define HOME_GRIPPER    120
+#define HOME_EXTRA      0
 
 
 /** SERIAL CONSTANTS */
@@ -37,6 +42,9 @@ https://www.arduino.cc/en/Reference/APIStyleGuide
 #define CMD_BELT        0x20
 #define CMD_GRIPPER     0x30
 #define CMD_MAGNET      0x40
+#define CMD_RELAY_1     0x50
+#define CMD_RELAY_2     0x60
+#define CMD_EXTRA       0x70
 #define CMD_PROXIMITY   0xA0
 #define CMD_LASER       0xB0
 

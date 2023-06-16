@@ -18,14 +18,18 @@ https://www.arduino.cc/en/Reference/APIStyleGuide
 
 Joint joints[4];
 Joint gripper;
-Magnet magnet;
+Joint extra;
+Relay relay_1;
+Relay relay_2;
 
 void setup_components() {
     joints[0] = Joint(SERVO_J0, HOME_J0);
     joints[1] = Joint(SERVO_J1, HOME_J1);
     joints[2] = Joint(SERVO_J2, HOME_J2);
     joints[3] = Joint(SERVO_J3, HOME_J3);
-    magnet    = Magnet(GRIPPER_RELAY, HOME_RELAY);
+    relay_1   = Relay(RELAY_1, HOME_RELAY_1);
+    relay_2   = Relay(RELAY_2, HOME_RELAY_2);
+    extra     = Joint(EXTRA_SERVO, HOME_EXTRA);
     gripper   = Joint(GRIPPER_SERVO, HOME_GRIPPER);
 };
 
@@ -45,9 +49,21 @@ int set_gripper_position(char params[]) {
     return (int)res;
 };
 
-int set_magnet_status(char params[]) {
+int set_extra_position(char params[]) {
     byte res = 0;
-    res = magnet.set_status((uint8_t)params[1]);
+    res = extra.set_position((uint8_t)params[1]);
+    return (int)res;
+};
+
+int set_relay_1_status(char params[]) {
+    byte res = 0;
+    res = relay_1.set_status((uint8_t)params[1]);
+    return (int)res;
+};
+
+int set_relay_2_status(char params[]) {
+    byte res = 0;
+    res = relay_2.set_status((uint8_t)params[1]);
     return (int)res;
 };
 
@@ -57,7 +73,9 @@ func_ptr_t command_list[256] = {};
 
 void build_command_list() { 
     command_list[CMD_JOINT]   = set_joint_position;
-    command_list[CMD_MAGNET]  = set_magnet_status;
+    command_list[CMD_RELAY_1] = set_relay_1_status;
+    command_list[CMD_RELAY_2] = set_relay_2_status;
+    command_list[CMD_EXTRA]   = set_extra_position;
     command_list[CMD_GRIPPER] = set_gripper_position;
     
  };

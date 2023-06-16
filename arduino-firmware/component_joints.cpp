@@ -18,21 +18,21 @@ uint8_t Joint::set_position(uint8_t position) {
 };
 
 
-/** MAGNET CLASS */
-Magnet::Magnet(){};
+/** RELAY CLASS */
+Relay::Relay(){};
 
-Magnet::Magnet(int pin, int status){
+Relay::Relay(int pin, int status){
     this->status = status;
     this->pin = pin;
     this->begin();
     this->set_status(this->status);
 };
 
-void Magnet::begin(){
+void Relay::begin(){
     pinMode(this->pin, OUTPUT);
 };
 
-uint8_t Magnet::set_status(uint8_t status){
+uint8_t Relay::set_status(uint8_t status){
     this->status = status;
     digitalWrite(this->pin, this->status);
     return this->status;
