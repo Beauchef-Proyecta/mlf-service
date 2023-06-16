@@ -17,15 +17,16 @@ https://www.arduino.cc/en/Reference/APIStyleGuide
 /** Components */
 
 Joint joints[4];
-
+Joint gripper;
+Magnet magnet;
 
 void setup_components() {
     joints[0] = Joint(SERVO_J0, HOME_J0);
     joints[1] = Joint(SERVO_J1, HOME_J1);
     joints[2] = Joint(SERVO_J2, HOME_J2);
     joints[3] = Joint(SERVO_J3, HOME_J3);
-    Joint gripper(GRIPPER_SERVO, HOME_GRIPPER);
-    Magnet magnet(GRIPPER_RELAY, HOME_RELAY);
+    magnet    = Magnet(GRIPPER_RELAY, HOME_RELAY);
+    gripper   = Joint(GRIPPER_SERVO, HOME_GRIPPER);
 };
 
 /** Wrapper functions */
