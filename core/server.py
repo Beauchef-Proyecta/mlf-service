@@ -36,19 +36,22 @@ def set_joints():
     mk2_serial.set_joints([s0, s1, s2, s3])
     return f"Mi nueva pose es: (q0={q0}, q1={q1}, q2={q2}, q3={q3})"
 
-@app.route("/set_magnet_servo", methods=["GET"])
-def set_magnet_servo():
+@app.route("/set_relay_status", methods=["GET"])
+def set_relay_status():
+    state = request.args.get("state")
+    n_relay = request.args.get("n_relay")
+    s = int(state) & 0xFF 
+    n = int(n_relay)
+    mk2_serial.set_relay_status([s], n)
+    return f"Estado del relay {n}: {state}"
+
+@app.route("/set_extra_servo", methods=["GET"])
+def set_extra_servo():
     q = request.args.get("q")
     s = int(q) & 0xFF
-    mk2_serial.set_magnet_servo([s])
-    return f"La pose del iman es: {q}"
+    mk2_serial.set_extra_servo([s])
+    return f"Estado del extra: {q}"
 
-@app.route("/set_magnet_status", methods=["GET"])
-def set_magnet_status():
-    state = request.args.get("state")
-    s = int(state) & 0xFF 
-    mk2_serial.set_magnet_status([s])
-    return f"Estado del iman: {state}"
 
 @app.route("/set_gripper_servo", methods=["GET"])
 def set_gripper_servo():
