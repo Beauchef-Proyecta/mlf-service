@@ -15,7 +15,7 @@ This repository is meant to send frames from a robot webcam to a browser through
 
 ## Upload the OS
 
-Download the Raspberry PI OS installer in the official page. Then, grab an empty Micro SD Card and upload the Raspberry Pi OS lite (64 bit) image to the card. Make sure that this OS uses Python 3.9.2!
+Download the Raspberry PI OS installer from the [official page]([https://link-url-here.org](https://www.raspberrypi.com/software/)). Then, grab an empty Micro SD Card and upload the Raspberry Pi OS lite (64 bit) image to the card. Make sure that this OS uses Python 3.9.2!
 
 ### Important settings 
 
