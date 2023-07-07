@@ -39,3 +39,44 @@ webcam.py: Run the server for the signaling and streaming.
 index.html: Webpage that show the video stream.
 
 client.js: Manage the WebRTC connection in the client.
+
+# Setup a new Raspberry Pi
+
+## Upload the OS
+
+Download the Raspberry PI OS installer in the official page. Then, grab an empty Micro SD Card and upload the Raspberry Pi OS lite (64 bit) image to the card. Make sure that this OS uses Python 3.9.2!
+
+### Important settings 
+
+Once you have already selected the OS image to upload to the Micro SD, go to the wheel on the bottom left. Perform the following steps:
+
+- [ ] Set hostname to `{ROBOT NAME}.local`
+- [ ] Enable SSH and then select `Use password authentication`
+- [ ] Select `Set username and password` and then set `Username: pi` and your preferred password (Make sure to remember it!)
+
+Save changes and then upload the OS image to the Micro SD Card.
+
+## Inside the Raspberry Pi
+
+### Connect to your Pi via SSH
+Load the card in the Raspberry Pi, connect it to a LAN (we recomend using an ethernet cable) and turn it on. Log into the Raspberry Pi through SSH:
+
+In your own terminal type:
+```sh
+ssh pi@{ROBOT NAME}.local
+```
+Enter the password that you selected.
+
+## System settings
+Run the `raspi-config` tool as super user:
+```sh
+sudo raspi-config
+```
+
+Perform the following changes (you may want to check the boxes):
+- [ ] Update this tool
+- [ ] Expand the System
+- [ ] Enable Camera (legacy)
+- [ ] Change TimeZone
+
+Apply changes, reboot and log again through SSH.
