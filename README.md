@@ -3,11 +3,13 @@ This repository is meant to send frames from a robot webcam to a browser through
 
 
 ## Proyect Description
-webcam.py: Run the server for the signaling and streaming.
+`webcam.py`: Run the server for the signaling and streaming.
 
-index.html: Webpage that show the video stream.
+`index.html`: Webpage that show the video stream.
 
-client.js: Manage the WebRTC connection in the client.
+`client.js`: Manage the WebRTC connection in the client.
+
+`server.py`: Run the server for robot actions.
 
 # Setting up a new Raspberry Pi
 
