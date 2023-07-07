@@ -1,5 +1,5 @@
 # READ ME
-Send frames from a robot webcam to a browser through webrtc. Other webrtc connections are available.
+This repository is meant to send frames from a robot webcam to a browser through webrtc. Other webrtc connections are available.
 
 
 ## Proyect Description
@@ -9,7 +9,7 @@ index.html: Webpage that show the video stream.
 
 client.js: Manage the WebRTC connection in the client.
 
-# Setup a new Raspberry Pi
+# Setting up a new Raspberry Pi
 
 ## Upload the OS
 
