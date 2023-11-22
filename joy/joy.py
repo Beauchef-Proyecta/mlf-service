@@ -11,16 +11,22 @@ from evdev import InputDevice, categorize, ecodes
 from core.serial_wrapper.mk2_serial import MK2Serial
 from core.model.mk2_robot import MK2Model
 
+import pickle
+
 
 
 class RobotJoy():
-    def __init__(self, q0=0, q1=0, q2=90, q3=120, dt = 0.1):
+    def __init__(self, q0=0, q1=0, q2=90, q3=120, dt = 0.1, save_path = False):
         self.serial = MK2Serial()
         time.sleep(5)
         self.model = MK2Model
         self.q  = [q0, q1, q2, q3]
         self.dq = [2, 2, 2, 2]
         self.delay = dt
+
+        # Path that was taken
+        self.save_path = save_path
+        self.joint_list = []
 
         # Magnet and relay parameters
         self.state = 0
@@ -47,7 +53,7 @@ class RobotJoy():
                 self.analog_max_y = 255
                 self.analog_min_y = 0
 
-                self.a_button = ecodes.BTN_Z
+                self.a_button = ecodes.BTN_C
 
         except FileNotFoundError:
             print(f"Device not found at {self.device_path}. Check the correct event path for your ZD-V+ controller.")
@@ -227,6 +233,12 @@ class RobotJoy():
         s1 = (90 + int(self.q[1])) & 0xFF
         s2 = (180 - int(self.q[2]) - int(self.q[1])) & 0xFF
         s3 = int(self.q[3]) & 0xFF
+
+        # Save current position
+        if self.save_path:
+            self.joint_list.append([self.q[0], self.q[1], self.q[2], self.q[3]])
+
+
         self.serial.set_joints([s0, s1, s2, s3])
     
     def switch_magnet_state(self):
@@ -240,10 +252,21 @@ class RobotJoy():
     def set_magnet(self):
         s = int(self.state) & 0xFF 
         n = int(self.relay)
+
+        if self.save_path:
+            self.joint_list.append([self.state,self.relay])
+
         self.serial.set_relay_status([s], n)
 
+    def save_path(self):
+        with open('path_joints.pkl', 'wb') as file:
+            pickle.dump(self.joint_list, file)
+            print("List of joints saved to 'path_joints.pkl'")
 
 
 if __name__ == "__main__":
     joy = RobotJoy(dt=0.1)
-    joy.start()
+    try:
+        joy.start()
+    except KeyboardInterrupt:
+        joy.save_path()
