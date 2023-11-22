@@ -31,6 +31,24 @@ class RobotJoy():
         try:
             self.controller = InputDevice(self.device_path)
             print(f"Found {self.controller.name}")
+
+            if self.controller.name == "Microsoft X-Box 360 pad":
+                self.analog_max_x = 32512
+                self.analog_min_x = -32768
+                self.analog_max_y = -32513
+                self.analog_min_y = 32767
+                self.RZ_max = 255
+                self.Z_max = 255
+
+                self.a_button = ecodes.BTN_SOUTH
+            else:
+                self.analog_max_x = 255
+                self.analog_min_x = 0
+                self.analog_max_y = 255
+                self.analog_min_y = 0
+
+                self.a_button = ecodes.BTN_Z
+
         except FileNotFoundError:
             print(f"Device not found at {self.device_path}. Check the correct event path for your ZD-V+ controller.")
     
@@ -51,7 +69,7 @@ class RobotJoy():
         event = key_event.event
 
         # MAGNET CODE
-        if event.code == ecodes.BTN_C:
+        if event.code == self.a_button:
             value = event.value
             if value == 1:
                 self.switch_magnet_state()
@@ -85,30 +103,33 @@ class RobotJoy():
                         break
 
         # Q3 CODE
-        if event.code == ecodes.BTN_Z:
-            value = event.value
-            if value == 1:
-                while value == 1:
-                    time.sleep(self.delay)
-                    if self.q[3] + self.dq[3] > 10 and self.q[3] + self.dq[3] < 170:
-                        self.q[3] += self.dq[3]
-                    self.set_joints()
-                    print(f"q3 moved right! q3:{self.q[3]}")
-                    event = self.controller.read_one()
-                    if event != None:
-                        break
-        if event.code == ecodes.BTN_WEST:
-            value = event.value
-            if value == 1:
-                while value == 1:
-                    time.sleep(self.delay)
-                    if self.q[3] - self.dq[3] > 10 and self.q[3] - self.dq[3] < 170:
-                        self.q[3] -= self.dq[3]
-                    self.set_joints()
-                    print(f"q3 moved down! q3:{self.q[3]}")
-                    event = self.controller.read_one()
-                    if event != None:
-                        break
+        if self.controller.name == "Microsoft X-Box 360 pad":
+            pass
+        else:
+            if event.code == ecodes.BTN_Z:
+                value = event.value
+                if value == 1:
+                    while value == 1:
+                        time.sleep(self.delay)
+                        if self.q[3] + self.dq[3] > 10 and self.q[3] + self.dq[3] < 170:
+                            self.q[3] += self.dq[3]
+                        self.set_joints()
+                        print(f"q3 moved right! q3:{self.q[3]}")
+                        event = self.controller.read_one()
+                        if event != None:
+                            break
+            if event.code == ecodes.BTN_WEST:
+                value = event.value
+                if value == 1:
+                    while value == 1:
+                        time.sleep(self.delay)
+                        if self.q[3] - self.dq[3] > 10 and self.q[3] - self.dq[3] < 170:
+                            self.q[3] -= self.dq[3]
+                        self.set_joints()
+                        print(f"q3 moved down! q3:{self.q[3]}")
+                        event = self.controller.read_one()
+                        if event != None:
+                            break
 
     def analog_handler(self, abs_event):
         event = abs_event.event
@@ -116,8 +137,8 @@ class RobotJoy():
         if event.code == ecodes.ABS_X:
             x_value = event.value
 
-            if x_value == 255:
-                while x_value == 255:
+            if x_value == self.analog_max_x:
+                while x_value == self.analog_max_x:
                     time.sleep(self.delay)
                     if self.q[0] - self.dq[0] > -45 and self.q[0] - self.dq[0] < 45:
                         self.q[0] -= self.dq[0]
@@ -129,8 +150,8 @@ class RobotJoy():
                         event = abs_event.event
                         x_value = event.value
 
-            elif x_value == 0:
-                while x_value == 0:
+            elif x_value == self.analog_min_x:
+                while x_value == self.analog_min_x:
                     time.sleep(self.delay)
                     if self.q[0] + self.dq[0] > -45 and self.q[0] + self.dq[0] < 45:
                         self.q[0] += self.dq[0]
@@ -143,8 +164,8 @@ class RobotJoy():
                         x_value = event.value
         if event.code == ecodes.ABS_Y:
             y_value = abs_event.event.value
-            if y_value == 255:
-                while y_value == 255:
+            if y_value == self.analog_max_y:
+                while y_value == self.analog_max_y:
                     time.sleep(self.delay)
                     if self.q[1] - self.dq[1] > -30 and self.q[1] - self.dq[1] < 62:
                         self.q[1] -= self.dq[1]
@@ -156,8 +177,8 @@ class RobotJoy():
                         event = abs_event.event
                         y_value = event.value
 
-            elif y_value == 0:
-                while y_value == 0:
+            elif y_value == self.analog_min_y:
+                while y_value == self.analog_min_y:
                     time.sleep(self.delay)
                     if self.q[1] + self.dq[1]> -30 and self.q[1] + self.dq[1] < 62:
                         self.q[1] += self.dq[1]
@@ -168,6 +189,38 @@ class RobotJoy():
                         abs_event = categorize(abs_event)
                         event = abs_event.event
                         y_value = event.value
+
+        if self.controller.name == "Microsoft X-Box 360 pad":
+            if event.code == ecodes.ABS_RZ:
+                tr_value = event.value
+
+                if tr_value == self.RZ_max:
+                    while tr_value == self.RZ_max:
+                        time.sleep(self.delay)
+                        if self.q[3] + self.dq[3] > 10 and self.q[3] + self.dq[3] < 170:
+                            self.q[3] += self.dq[3]
+                        self.set_joints()
+                        print(f"Moved to the left! q3:{self.q[3]}")
+                        abs_event = self.controller.read_one()
+                        if abs_event:
+                            abs_event = categorize(abs_event)
+                            event = abs_event.event
+                            tr_value = event.value
+            elif event.code == ecodes.ABS_Z:
+                tr_value = event.value
+
+                if tr_value == self.Z_max:
+                    while tr_value == self.Z_max:
+                        time.sleep(self.delay)
+                        if self.q[3] - self.dq[3] > 10 and self.q[3] - self.dq[3] < 170:
+                            self.q[3] -= self.dq[3]
+                        self.set_joints()
+                        print(f"Moved to the left! q3:{self.q[3]}")
+                        abs_event = self.controller.read_one()
+                        if abs_event:
+                            abs_event = categorize(abs_event)
+                            event = abs_event.event
+                            tr_value = event.value
     
     def set_joints(self):
         s0 = (90 - int(self.q[0]) * 2) & 0xFF
