@@ -43,4 +43,4 @@ class MK2Serial:
     
     def set_gripper_servo(self, angle: list):
         data = self.build_serial_msg(self.CMD_GRIPPER, angle)
-        return self.serial.send_data(data)
+        return self.serial.send_data(data)   
