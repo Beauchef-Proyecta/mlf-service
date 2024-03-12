@@ -47,7 +47,7 @@ class RobotJoy():
                 self.analog_max_y = 255
                 self.analog_min_y = 0
 
-                self.a_button = ecodes.BTN_Z
+                self.a_button = ecodes.BTN_C
 
         except FileNotFoundError:
             print(f"Device not found at {self.device_path}. Check the correct event path for your ZD-V+ controller.")
@@ -146,9 +146,10 @@ class RobotJoy():
                     print(f"Moved to the left! q0:{self.q[0]}")
                     abs_event = self.controller.read_one()
                     if abs_event:
-                        abs_event = categorize(abs_event)
-                        event = abs_event.event
-                        x_value = event.value
+                        if abs_event.type == ecodes.EV_ABS:
+                            abs_event = categorize(abs_event)
+                            event = abs_event.event
+                            x_value = event.value
 
             elif x_value == self.analog_min_x:
                 while x_value == self.analog_min_x:
@@ -158,10 +159,11 @@ class RobotJoy():
                     self.set_joints()
                     print(f"Moved to the right! q0:{self.q[0]}")
                     abs_event = self.controller.read_one()
-                    if abs_event:
-                        abs_event = categorize(abs_event)
-                        event = abs_event.event
-                        x_value = event.value
+                    if abs_event != None:
+                        if abs_event.type == ecodes.EV_ABS:
+                            abs_event = categorize(abs_event)
+                            event = abs_event.event
+                            x_value = event.value
         if event.code == ecodes.ABS_Y:
             y_value = abs_event.event.value
             if y_value == self.analog_max_y:
@@ -172,10 +174,11 @@ class RobotJoy():
                     self.set_joints()
                     print(f"Moved to the left! q1:{self.q[1]}")
                     abs_event = self.controller.read_one()
-                    if abs_event:
-                        abs_event = categorize(abs_event)
-                        event = abs_event.event
-                        y_value = event.value
+                    if abs_event != None:
+                        if abs_event.type == ecodes.EV_ABS:
+                            abs_event = categorize(abs_event)
+                            event = abs_event.event
+                            y_value = event.value
 
             elif y_value == self.analog_min_y:
                 while y_value == self.analog_min_y:
@@ -185,10 +188,11 @@ class RobotJoy():
                     self.set_joints()
                     print(f"Moved to the right! q1:{self.q[1]}")
                     abs_event = self.controller.read_one()
-                    if abs_event:
-                        abs_event = categorize(abs_event)
-                        event = abs_event.event
-                        y_value = event.value
+                    if abs_event != None:
+                        if abs_event.type == ecodes.EV_ABS:
+                            abs_event = categorize(abs_event)
+                            event = abs_event.event
+                            y_value = event.value
 
         if self.controller.name == "Microsoft X-Box 360 pad":
             if event.code == ecodes.ABS_RZ:
