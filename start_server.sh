@@ -27,7 +27,18 @@ else
   curl -I http://localhost:5000
 fi
 
-# Check that webcam is running
+# Check that screen is running
+if screen -ls | grep -q "webcam" ;
+then
+  echo "Screen OK! "
+else
+  echo "Screen is NOT running!"
+  echo "Creating screen 'webcam'"
+  screen -dmS webcam
+  sleep 0.5
+fi
+
+# Check if webcam is running
 if curl -stderr /dev/null -I http://localhost:8080 | grep -1 "200 OK" ;
 then
  echo "Webcam OK!"
