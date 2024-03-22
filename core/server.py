@@ -28,10 +28,10 @@ def set_joints():
     q2 = request.args.get("q2")
     q3 = request.args.get("q3")
 
-    s0 = (90 - int(q0) * 2) & 0xFF
-    s1 = (90 + int(q1)) & 0xFF
-    s2 = (180 - int(q2) - int(q1)) & 0xFF
-    s3 = int(q3) & 0xFF
+    s0 = int(float(q0)) & 0xFF
+    s1 = int(float(q1)) & 0xFF
+    s2 = int(float(q2)) & 0xFF
+    s3 = int(float(q3)) & 0xFF
 
     mk2_serial.set_joints([s0, s1, s2, s3])
     return f"Mi nueva pose es: (q0={q0}, q1={q1}, q2={q2}, q3={q3})"
@@ -62,4 +62,4 @@ def set_gripper_servo():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    app.run(host="0.0.0.0", debug=True)
