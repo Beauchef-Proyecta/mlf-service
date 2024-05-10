@@ -71,7 +71,7 @@ int set_relay_2_status(char params[]) {
 
 int get_weight(char _params[]) {
     byte res = 0;
-    res = load_cell.get_weight()
+    res = load_cell.get_weight();
     return (int)res; 
 }
 
