@@ -1,6 +1,6 @@
 #include "Arduino.h"
 #include "component_joints.h"
-
+#include <string.h>  // Para memcpy
 
 /** JOINT CLASS */
 Joint::Joint(){};
@@ -52,7 +52,11 @@ LoadCell::LoadCell(int dout, int clk) {
 };
 
 uint8_t LoadCell::get_weight() {
-    byte *b = (byte *) &this->cell.get_value(10);
-    Serial.write(b, 4);
+    double value = this->cell.get_value(10);  // Obtener el valor de la celda como double
+    byte b[sizeof(double)];  // Crear un arreglo de bytes del tamaño de un double
+    memcpy(b, &value, sizeof(double));  // Copiar el double a un arreglo de bytes
+
+    // Escribir los bytes en el puerto serie
+    Serial.write(b, sizeof(double));
     return 0;
 };
