@@ -37,4 +37,6 @@ class LoadCell {
     LoadCell();
     LoadCell(int dout, int clk);
 
-}
+    uint8_t get_weight();
+
+};
