@@ -1,4 +1,5 @@
 import math
+import struct
 from flask import Flask, request, Response, Blueprint, make_response
 
 from serial_wrapper.mk2_serial import MK2Serial
@@ -59,6 +60,12 @@ def set_gripper_servo():
     s = int(q) & 0xFF
     mk2_serial.set_gripper_servo([s])
     return f"Estado del gripper: {q}"
+
+@app.route("/get_weight", methods=["GET"])
+def get_weight():
+    data  = mk2_serial.get_weight()
+    weight, _, _ = struct.unpack('dbb', data)
+    return {'weight': weight}
 
 
 if __name__ == "__main__":
