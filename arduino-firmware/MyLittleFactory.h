@@ -19,6 +19,9 @@ https://www.arduino.cc/en/Reference/APIStyleGuide
 #define EXTRA_SERVO     11  // extra servo
 #define RELAY_1         7   // manage first relay
 #define RELAY_2         8   // manage second relay
+#define CELL_CLK        14  
+#define CELL_DOUT       15
+
 
 #define BELT_STATUS     8   // manage belt status
 #define BELT_DIRECTION  4   // manage belt forward-backward
@@ -47,6 +50,7 @@ https://www.arduino.cc/en/Reference/APIStyleGuide
 #define CMD_EXTRA       0x70
 #define CMD_PROXIMITY   0xA0
 #define CMD_LASER       0xB0
+#define CMD_WEIGHT      0x80
 
 typedef int (*func_ptr_t)(char*);
 

@@ -1,4 +1,5 @@
 #include <Servo.h>
+#include "HX711.h"
 #include "Arduino.h"
 
 class Joint {
@@ -25,3 +26,15 @@ class Relay {
     void begin();
     uint8_t set_status(uint8_t status);
 };
+
+class LoadCell {
+  private:
+    HX711 cell;
+    int dout;
+    int clk;
+
+  public:
+    LoadCell();
+    LoadCell(int dout, int clk);
+
+}

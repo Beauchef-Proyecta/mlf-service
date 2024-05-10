@@ -21,6 +21,7 @@ Joint gripper;
 Joint extra;
 Relay relay_1;
 Relay relay_2;
+LoadCell load_cell;
 
 void setup_components() {
     joints[0] = Joint(SERVO_J0, HOME_J0);
@@ -29,6 +30,7 @@ void setup_components() {
     joints[3] = Joint(SERVO_J3, HOME_J3);
     relay_1   = Relay(RELAY_1, HOME_RELAY_1);
     relay_2   = Relay(RELAY_2, HOME_RELAY_2);
+    load_cell   = LoadCell(CELL_DOUT, CELL_CLK);
     extra     = Joint(EXTRA_SERVO, HOME_EXTRA);
     gripper   = Joint(GRIPPER_SERVO, HOME_GRIPPER);
 };
@@ -67,6 +69,12 @@ int set_relay_2_status(char params[]) {
     return (int)res;
 };
 
+int get_weight(char _params[]) {
+    byte res = 0;
+    res = load_cell.get_weight()
+    return (int)res; 
+}
+
 /** Command List */
 
 func_ptr_t command_list[256] = {};
@@ -77,6 +85,7 @@ void build_command_list() {
     command_list[CMD_RELAY_2] = set_relay_2_status;
     command_list[CMD_EXTRA]   = set_extra_position;
     command_list[CMD_GRIPPER] = set_gripper_position;
+    command_list[CMD_WEIGHT] = get_weight;
     
  };
 

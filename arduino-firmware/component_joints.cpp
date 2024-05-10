@@ -37,3 +37,22 @@ uint8_t Relay::set_status(uint8_t status){
     digitalWrite(this->pin, this->status);
     return this->status;
 };
+
+
+/** LOAD CELL CLASS */
+LoadCell::LoadCell(){};
+
+LoadCell::LoadCell(int dout, int clk) {
+    this->dout = dout;
+    this->clk =clk;
+    this->cell.begin(dout, clk);
+    this->cell.read(); //espera a estar listo
+    this->cell.set_scale();
+    this->cell.tare();
+};
+
+uint8_t LoadCell::get_weight() {
+    byte *b = (byte *) &this->cell.get_value(10);
+    Serial.write(b, 4);
+    return 0;
+};
