@@ -24,3 +24,8 @@ class SerialController:
         self.serial.write(data)
         time.sleep(0.01)
         return self.serial.read(2)
+
+    def recv_data(self, cmd, len_data):
+        self.serial.write(cmd)
+        time.sleep(0.01)
+        return self.serial.read(2 + len_data)
