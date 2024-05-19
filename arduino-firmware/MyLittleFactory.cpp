@@ -37,39 +37,39 @@ void setup_components() {
 
 /** Wrapper functions */
 
-int set_joint_position(char params[]) {
+int set_joint_position(unsigned char params[]) {
     byte res = 0;
     for (int id = 0; id < 4; id++) {
-        res += joints[id].set_position((uint8_t)params[id + 1]);
+        res += joints[id].set_position((unsigned char)params[id + 1]);
     }
     return (int)res;
 };
 
-int set_gripper_position(char params[]) {
+int set_gripper_position(unsigned char params[]) {
     byte res = 0;
-    res = gripper.set_position((uint8_t)params[1]);
+    res = gripper.set_position((unsigned char)params[1]);
     return (int)res;
 };
 
-int set_extra_position(char params[]) {
+int set_extra_position(unsigned char params[]) {
     byte res = 0;
-    res = extra.set_position((uint8_t)params[1]);
+    res = extra.set_position((unsigned char)params[1]);
     return (int)res;
 };
 
-int set_relay_1_status(char params[]) {
+int set_relay_1_status(unsigned char params[]) {
     byte res = 0;
-    res = relay_1.set_status((uint8_t)params[1]);
+    res = relay_1.set_status((unsigned char)params[1]);
     return (int)res;
 };
 
-int set_relay_2_status(char params[]) {
+int set_relay_2_status(unsigned char params[]) {
     byte res = 0;
-    res = relay_2.set_status((uint8_t)params[1]);
+    res = relay_2.set_status((unsigned char)params[1]);
     return (int)res;
 };
 
-int get_weight(char _params[]) {
+int get_weight(unsigned char _params[]) {
     byte res = 0;
     res = load_cell.get_weight();
     return (int)res; 
@@ -97,7 +97,7 @@ void setup_serial() {
     delay(100);
 };
 
-bool read_command(char buffer[]) {  // send data only when you receive data:
+bool read_command(unsigned char buffer[]) {  // send data only when you receive data:
     int n;
     memset(buffer, 0, 16);
     if (Serial.available() > 1) {
@@ -110,7 +110,7 @@ bool read_command(char buffer[]) {  // send data only when you receive data:
     return false;
 };
 
-int execute_command(char cmd[]) {
+int execute_command(unsigned char cmd[]) {
     int response = 0xFF;
     if (command_list[cmd[0]] != 0) {
         response = command_list[cmd[0]](cmd);

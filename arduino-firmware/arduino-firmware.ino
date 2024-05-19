@@ -6,7 +6,7 @@ void setup() {
     build_command_list();
 }
 void loop() {
-    char cmd[16];
+    unsigned char cmd[16];
     if(read_command(cmd)){
       execute_command(cmd);
     };

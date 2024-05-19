@@ -63,6 +63,6 @@ void setup_serial();
 
 void setup_components();
 
-bool read_command(char* buffer);
+bool read_command(unsigned char* buffer);
 
-int execute_command(char* cmd);
+int execute_command(unsigned char* cmd);
