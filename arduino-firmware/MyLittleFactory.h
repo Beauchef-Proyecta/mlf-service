@@ -19,8 +19,8 @@ https://www.arduino.cc/en/Reference/APIStyleGuide
 #define EXTRA_SERVO     11  // extra servo
 #define RELAY_1         7   // manage first relay
 #define RELAY_2         8   // manage second relay
-#define CELL_CLK        14  
-#define CELL_DOUT       15
+#define CELL_CLK        A0  
+#define CELL_DOUT       A1
 
 
 #define BELT_STATUS     8   // manage belt status
