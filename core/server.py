@@ -63,8 +63,8 @@ def set_gripper_servo():
 
 @app.route("/get_weight", methods=["GET"])
 def get_weight():
-    data  = mk2_serial.get_weight()
-    weight, _, _ = struct.unpack('dbb', data)
+    data  = mk2_serial.get_weight()[:4]
+    weight = struct.unpack('f', data)
     return {'weight': weight}
 
 

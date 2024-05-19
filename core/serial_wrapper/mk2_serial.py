@@ -47,6 +47,6 @@ class MK2Serial:
         return self.serial.send_data(data)
 
     def get_weight(self):
-        #8 es len de la data recibida (8 por ser double)
+        #4 es len de la data recibida (4 por ser double en arduino)
         data = self.build_serial_msg(self.CMD_WEIGHT, [])
-        return self.serial.recv_data(data, 8)   
+        return self.serial.recv_data(data, 4)   
