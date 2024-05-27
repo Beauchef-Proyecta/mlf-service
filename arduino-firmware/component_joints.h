@@ -40,3 +40,17 @@ class LoadCell {
     uint8_t get_weight();
 
 };
+
+
+class DistanceSensor {
+  private:
+    int trigger_pin;
+    int echo_pin;
+
+  public:
+    DistanceSensor();
+    DistanceSensor(int trigger_pin, int echo_pin);
+
+    uint8_t get_distance();
+
+};

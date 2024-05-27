@@ -60,3 +60,28 @@ uint8_t LoadCell::get_weight() {
     Serial.write(b, sizeof(double));
     return 0;
 };
+
+
+/** DISTANCE SENSOR CLASS */
+DistanceSensor::DistanceSensor(){};
+
+DistanceSensor::DistanceSensor(int trigger_pin, int echo_pin) {
+    this->trigger_pin = trigger_pin;
+    this->echo_pin = echo_pin;
+    pinMode(this->trigger_pin, OUTPUT);
+    pinMode(this->echo_pin, INPUT);
+};
+
+uint8_t DistanceSensor::get_distance() {
+    digitalWrite(this->trigger_pin, LOW);
+    delayMicroseconds(2);
+    digitalWrite(this->trigger_pin, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(this->trigger_pin, LOW);
+    double duration = pulseIn(this->echo_pin, HIGH);
+    double distance = duration * 0.034 / 2;
+    byte b[sizeof(double)];
+    memcpy(b, &distance, sizeof(double));
+    Serial.write(b, sizeof(double));
+    return 0;
+};

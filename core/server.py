@@ -67,6 +67,11 @@ def get_weight():
     weight = struct.unpack('f', data)
     return {'weight': weight}
 
+@app.route("/get_distance", methods=["GET"])
+def get_distance():
+    data = mk2_serial.get_distance()[:4]
+    distance = struct.unpack('f', data)
+    return {'distance': distance}
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

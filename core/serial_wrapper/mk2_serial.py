@@ -14,6 +14,7 @@ class MK2Serial:
     CMD_PROXIMITY = 0xA0
     CMD_LASER = 0xB0
     CMD_WEIGHT = 0x80
+    CMD_DISTANCE = 0x90
 
     
     def __init__(self, port="/dev/ttyUSB0"):
@@ -50,3 +51,7 @@ class MK2Serial:
         #4 es len de la data recibida (4 por ser double en arduino)
         data = self.build_serial_msg(self.CMD_WEIGHT, [])
         return self.serial.recv_data(data, 4)   
+    
+    def get_distance(self):
+        data = self.build_serial_msg(self.CMD_DISTANCE, [])
+        return self.serial.recv_data(data, 4)
