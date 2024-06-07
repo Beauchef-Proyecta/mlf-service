@@ -24,13 +24,14 @@ class SerialController:
     def send_data(self, data):
         self.serial.write(data)
         time.sleep(0.01)
+        self.serial.read(2)
         return self.serial.read(2)
 
     def recv_data(self, cmd, len_data):
         self.serial.write(cmd)
-        time.sleep(0.2)
+        time.sleep(0.01)
         # print(f'Data writed {cmd}, len_data {len_data}')
-        data = self.serial.read(len_data)
+        data = self.serial.read(4)
         self.serial.read(1) # Read standard response
         self.serial.read(2) # Read standard response
         return data
