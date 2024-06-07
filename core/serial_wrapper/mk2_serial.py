@@ -1,4 +1,5 @@
 from .serial_controller import SerialController
+import time
 
 
 class MK2Serial:
@@ -50,7 +51,7 @@ class MK2Serial:
     def get_weight(self):
         #4 es len de la data recibida (4 por ser double en arduino)
         data = self.build_serial_msg(self.CMD_WEIGHT, [])
-        return self.serial.recv_data(data, 4)   
+        return self.serial.recv_data(data, 4)
     
     def get_distance(self):
         data = self.build_serial_msg(self.CMD_DISTANCE, [])

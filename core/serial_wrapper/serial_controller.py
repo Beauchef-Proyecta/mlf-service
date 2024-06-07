@@ -12,6 +12,7 @@ class SerialController:
         try:
             self.serial = Serial(self.port, 115200)
             print("The port is available")
+            time.sleep(2)
         except SerialException:
             print("The port is at use")
             self.serial.close()
@@ -27,8 +28,9 @@ class SerialController:
 
     def recv_data(self, cmd, len_data):
         self.serial.write(cmd)
-        time.sleep(0.01)
-        weight = self.serial.read(len_data)
-        cmd = self.serial.read(1)
-        response = self.serial.read(2)
-        return weight + cmd + response
+        time.sleep(0.2)
+        # print(f'Data writed {cmd}, len_data {len_data}')
+        data = self.serial.read(len_data)
+        self.serial.read(1) # Read standard response
+        self.serial.read(2) # Read standard response
+        return data

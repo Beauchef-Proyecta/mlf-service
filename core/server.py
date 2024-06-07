@@ -63,13 +63,13 @@ def set_gripper_servo():
 
 @app.route("/get_weight", methods=["GET"])
 def get_weight():
-    data  = mk2_serial.get_weight()[:4]
+    data  = mk2_serial.get_weight()
     weight = struct.unpack('f', data)
     return {'weight': weight}
 
 @app.route("/get_distance", methods=["GET"])
 def get_distance():
-    data = mk2_serial.get_distance()[:4]
+    data = mk2_serial.get_distance()
     distance = struct.unpack('f', data)
     return {'distance': distance}
 
