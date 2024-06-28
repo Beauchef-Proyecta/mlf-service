@@ -2,9 +2,11 @@ import math
 from flask import Flask, request, Response, Blueprint, make_response
 
 from serial_wrapper.mk2_serial import MK2Serial
+from serial_wrapper.distance_serial import UltrasonicSensor
 
 app = Flask(__name__)
-mk2_serial = MK2Serial()
+mk2_serial = MK2Serial('/dev/ttyUSB0')
+distance_sensor = UltrasonicSensor('/dev/ttyUSB1')
 
 @app.route("/")
 def home():
@@ -60,6 +62,12 @@ def set_gripper_servo():
     mk2_serial.set_gripper_servo([s])
     return f"Estado del gripper: {q}"
 
+@app.route("/get_distance", methods=["GET"])
+def get_distance():
+    distance = distance_sensor.get_distance()
+    if distance is None:
+        return {'distance': 0}
+    return {'distance': distance}
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
