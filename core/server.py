@@ -4,8 +4,8 @@ from flask import Flask, request, Response, Blueprint, make_response
 import os
 from serial_wrapper.mk2_serial import MK2Serial
 
-valor = os.getenv("MI_VARIABLE", '0,0,0,0')
-offset_list = [int(num) for num in valor.split(',')]
+offset_str = os.getenv("OFFSETS", '0,0,0,0')
+offset_list = [int(num) for num in offset_str.split(',')]
 
 print(offset_list)
 app = Flask(__name__)
