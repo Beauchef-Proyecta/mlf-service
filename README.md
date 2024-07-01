@@ -39,3 +39,12 @@ webcam.py: Run the server for the signaling and streaming.
 index.html: Webpage that show the video stream.
 
 client.js: Manage the WebRTC connection in the client.
+
+## Agregar offsets
+ejecutar el siguiente comando
+
+    $ echo 'export OFFSETS = "<offset1>,<offset2>,<offset3>,<offset4>"' >> ~/.bashrc
+Para editar o eliminarlas
+
+    $ nano ~/.bashrc
+y al final del archivo hay que editarlas.
