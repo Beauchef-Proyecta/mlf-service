@@ -18,7 +18,7 @@ def home():
 
 @app.route("/connect")
 def connect():
-    return "Connected!"
+    return f"Connected! offsets: {offset_list}"
 
 
 @app.route("/move")
