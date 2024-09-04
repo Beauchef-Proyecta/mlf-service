@@ -1,6 +1,7 @@
 import math
 import struct
 from flask import Flask, request, Response, Blueprint, make_response
+import cv2
 import os
 from serial_wrapper.mk2_serial import MK2Serial
 
@@ -70,7 +71,21 @@ def get_weight():
     data  = mk2_serial.get_weight()[:4]
     weight = struct.unpack('f', data)
     return {'weight': weight}
+    
+@app.route('/capture', methods=["GET"])
+def capture_image():
+    camera = cv2.VideoCapture(0)
+    if not camera.isOpened():
+        return "Could not open camera", 500
+    
+    ret, frame = camera.read()
+    ret, jpeg = cv2.imencode('.jpg', frame)
 
+    image = jpeg.tobytes()
+    if image is None:
+        return Response("Camera not available", status=503)
+    
+    return Response(image, mimetype='image/jpeg')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
