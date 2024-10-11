@@ -4,13 +4,15 @@ from flask import Flask, request, Response, Blueprint, make_response
 import cv2
 import os
 from serial_wrapper.mk2_serial import MK2Serial
+from serial_wrapper.pesa_serial import WeightSensor
 
 offset_str = os.getenv("OFFSETS", '0,0,0,0')
 offset_list = [int(num) for num in offset_str.split(',')]
 
 print(offset_list)
 app = Flask(__name__)
-mk2_serial = MK2Serial()
+mk2_serial = MK2Serial("/dev/ttyUSB0")
+weight_sensor = WeightSensor("/dev/ttyUSB1")
 
 @app.route("/")
 def home():
@@ -68,7 +70,7 @@ def set_gripper_servo():
 
 @app.route("/get_weight", methods=["GET"])
 def get_weight():
-    data  = mk2_serial.get_weight()[:4]
+    data  = weight_sensor.get_weight()[:4]
     weight = struct.unpack('f', data)
     return {'weight': weight}
     
