@@ -70,8 +70,7 @@ def set_gripper_servo():
 
 @app.route("/get_weight", methods=["GET"])
 def get_weight():
-    data  = weight_sensor.get_weight()[:4]
-    weight = struct.unpack('f', data)
+    weight  = weight_sensor.get_weight()
     return {'weight': weight}
     
 @app.route('/capture', methods=["GET"])
