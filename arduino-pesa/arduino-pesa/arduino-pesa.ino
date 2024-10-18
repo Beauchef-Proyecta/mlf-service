@@ -18,7 +18,7 @@ void setup() {
   }
 
   // Calibrar el factor de escala (ajusta según tu configuración)
-  //scale.set_scale(2280.f);  // El valor de escala debe ser calibrado con la celda de carga
+  scale.set_scale(1922.f);  // El valor de escala debe ser calibrado con la celda de carga
   scale.tare();  // Restar la tara, es decir, poner la balanza a 0
 }
 
