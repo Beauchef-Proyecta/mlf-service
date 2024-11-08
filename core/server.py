@@ -76,7 +76,7 @@ def get_weight():
 def capture_image():
     camera = cv2.VideoCapture(0)
     if not camera.isOpened():
-        return "Could not open camera", 500
+        return Response("Camera is closed", status=503)
     
     ret, frame = camera.read()
     ret, jpeg = cv2.imencode('.jpg', frame)

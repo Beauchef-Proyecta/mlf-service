@@ -5,13 +5,13 @@
 class Joint {
    private:
     Servo servo;
-    uint8_t position;
+    int position;
 
    public:
     Joint();
-    Joint(int pin, uint8_t position);
+    Joint(int pin, int position);
 
-    uint8_t set_position(uint8_t position);
+    int set_position(int position);
 };
 
 class Relay {
@@ -24,7 +24,7 @@ class Relay {
     Relay(int pin, int status);
     
     void begin();
-    uint8_t set_status(uint8_t status);
+    int set_status(int status);
 };
 
 class LoadCell {
@@ -37,6 +37,6 @@ class LoadCell {
     LoadCell();
     LoadCell(int dout, int clk);
 
-    uint8_t get_weight();
+    int get_weight();
 
 };

@@ -5,13 +5,13 @@
 /** JOINT CLASS */
 Joint::Joint(){};
 
-Joint::Joint(int pin, uint8_t position) {
+Joint::Joint(int pin, int position) {
     this->servo.attach(pin);
     int params[] = {pin, position};
     this->set_position(position);
 };
 
-uint8_t Joint::set_position(uint8_t position) {
+int Joint::set_position(int position) {
     this->position = position;
     this->servo.write(position);
     return this->position;
@@ -32,7 +32,7 @@ void Relay::begin(){
     pinMode(this->pin, OUTPUT);
 };
 
-uint8_t Relay::set_status(uint8_t status){
+int Relay::set_status(int status){
     this->status = status;
     digitalWrite(this->pin, this->status);
     return this->status;
@@ -51,12 +51,9 @@ LoadCell::LoadCell(int dout, int clk) {
     this->cell.tare();
 };
 
-uint8_t LoadCell::get_weight() {
-    double value = this->cell.get_value(10);  // Obtener el valor de la celda como double
-    byte b[sizeof(double)];  // Crear un arreglo de bytes del tamaño de un double
-    memcpy(b, &value, sizeof(double));  // Copiar el double a un arreglo de bytes
-
-    // Escribir los bytes en el puerto serie
-    Serial.write(b, sizeof(double));
+int LoadCell::get_weight() {
+    //double value = this->cell.get_value(10);  // Obtener el valor de la celda como double
+    double value = 23.5;
+    Serial.println(value);
     return 0;
 };
