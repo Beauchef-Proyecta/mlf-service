@@ -28,25 +28,33 @@ class MK2Serial:
     
     def set_joints(self, angles: list):
         data = self.build_serial_msg(self.CMD_JOINT, angles)
-        return self.serial.send_data(data)
+        self.serial.send_data(data)
+        payload = 0
+        for angle in angles:
+            payload += angle
+        return self.serial.recv_response(self.CMD_JOINT, payload % 256)
 
     def set_relay_status(self, state:list, n:int):
         if n == 1:
-            data = self.build_serial_msg(self.CMD_RELAY_1, state)
+            cmd = self.CMD_RELAY_1
         else:
-            data = self.build_serial_msg(self.CMD_RELAY_2, state)
-        return self.serial.send_data(data)
+            cmd = self.CMD_RELAY_2
+        data = self.build_serial_msg(cmd, state)
+        self.serial.send_data(data)
+        self.serial.recv_response(cmd, state)
     
     def set_extra_servo(self, angle: list):
         data = self.build_serial_msg(self.CMD_EXTRA, angle)
-        return self.serial.send_data(data)
+        self.serial.send_data(data)
+        return self.serial.recv_response(self.CMD_EXTRA, angle)
 
     
     def set_gripper_servo(self, angle: list):
         data = self.build_serial_msg(self.CMD_GRIPPER, angle)
-        return self.serial.send_data(data)
+        self.serial.send_data(data)
+        return self.serial.recv_response(self.CMD_GRIPPER, angle)
 
     def get_weight(self):
-        #4 es len de la data recibida (4 por ser double en arduino)
         data = self.build_serial_msg(self.CMD_WEIGHT, [])
-        return self.serial.recv_data(data, 4)   
+        self.serial.send_data(data)
+        return self.serial.recv_response(self.CMD_WEIGHT, 0) #payload = 0 porque no se envían datos

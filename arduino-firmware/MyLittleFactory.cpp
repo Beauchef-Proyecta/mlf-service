@@ -39,6 +39,7 @@ void setup_components() {
 
 int set_joint_position(unsigned char params[]) {
     byte res = 0;
+    Serial.write(0x00);
     for (int id = 0; id < 4; id++) {
         res += joints[id].set_position((unsigned char)params[id + 1]);
     }
@@ -47,30 +48,35 @@ int set_joint_position(unsigned char params[]) {
 
 int set_gripper_position(unsigned char params[]) {
     byte res = 0;
+    Serial.write(0x00);
     res = gripper.set_position((unsigned char)params[1]);
     return (int)res;
 };
 
 int set_extra_position(unsigned char params[]) {
     byte res = 0;
+    Serial.write(0x00);
     res = extra.set_position((unsigned char)params[1]);
     return (int)res;
 };
 
 int set_relay_1_status(unsigned char params[]) {
     byte res = 0;
+    Serial.write(0x00);
     res = relay_1.set_status((unsigned char)params[1]);
     return (int)res;
 };
 
 int set_relay_2_status(unsigned char params[]) {
     byte res = 0;
+    Serial.write(0x00);
     res = relay_2.set_status((unsigned char)params[1]);
     return (int)res;
 };
 
 int get_weight(unsigned char _params[]) {
     byte res = 0;
+    Serial.write(0x04); // size of double
     res = load_cell.get_weight();
     return (int)res; 
 }
@@ -113,8 +119,8 @@ bool read_command(unsigned char buffer[]) {  // send data only when you receive 
 int execute_command(unsigned char cmd[]) {
     int response = 0xFF;
     if (command_list[cmd[0]] != 0) {
+        Serial.write(cmd[0]);
         response = command_list[cmd[0]](cmd);
     }
-    Serial.print(cmd[0], HEX);
-    Serial.print(response, HEX);
+    Serial.write(response);
 };

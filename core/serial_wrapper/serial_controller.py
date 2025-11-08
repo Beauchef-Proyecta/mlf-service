@@ -2,6 +2,7 @@ import time
 
 from serial import Serial
 from serial.serialutil import SerialException
+import struct
 
 class SerialController:
     def __init__(self, port):
@@ -23,12 +24,11 @@ class SerialController:
     def send_data(self, data):
         self.serial.write(data)
         time.sleep(0.01)
-        return self.serial.read(2)
-
-    def recv_data(self, cmd, len_data):
-        self.serial.write(cmd)
-        time.sleep(0.01)
-        weight = self.serial.read(len_data)
-        cmd = self.serial.read(1)
-        response = self.serial.read(2)
-        return weight + cmd + response
+    
+    def recv_response(self, cmd, payload):
+        assert cmd.to_bytes(1, 'big') == self.serial.read(1)
+        len_data = struct.unpack('b',self.serial.read(1))[0]
+        response = self.serial.read(len_data)
+        self.serial.read(1) == payload.to_bytes(1, 'big')
+        return response
+        
