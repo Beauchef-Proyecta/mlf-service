@@ -41,7 +41,7 @@ class MK2Serial:
             cmd = self.CMD_RELAY_2
         data = self.build_serial_msg(cmd, state)
         self.serial.send_data(data)
-        self.serial.recv_response(cmd, state)
+        self.serial.recv_response(cmd, state[0])
     
     def set_extra_servo(self, angle: list):
         data = self.build_serial_msg(self.CMD_EXTRA, angle)
